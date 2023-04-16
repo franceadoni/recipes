@@ -1,0 +1,8 @@
+<ul *ngIf="(recipe$ | async) as recipe">
+    <li>{{recipe.title}}</li>
+    <li>{{recipe.description}}</li>
+    <li>{{recipe.ingredients}}</li>
+    <li>{{recipe.category_id}}</li>
+    <li>{{recipe.level_id}}</li>
+    <li>{{recipe.time}}</li>
+</ul>

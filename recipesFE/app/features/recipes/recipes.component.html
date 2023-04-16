@@ -1,0 +1,55 @@
+<form #form="ngForm" (ngSubmit)="filterCat(form)">
+<input type="number" id="cat" name="cat" ngModel placeholder="Search for category">
+<button type="submit" class="btn btn-outline-dark">Search</button>
+</form>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>            
+            <th>Category</th>  
+            <th></th>  
+            <th></th>  
+            <th></th>  
+            <th></th>   
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let recipe of recipesStore.recipes, index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ recipe.title }}</td>           
+            <td>{{ recipe.category_id }}</td> 
+            <td><button (click)="addFavourites(recipe)"><i class="fa-solid fa-star"></i></button></td>
+            <td><button class="btn btn-outline-light" routerLink="{{recipe.id}}">Details</button></td> 
+            <td><button class="btn btn-dark" *ngIf="adminLogged==true" (click)="delRecipe(recipe)">Delete</button></td> 
+            <td><button class="btn btn-light" *ngIf="editorLogged==true" (click)="setActive(recipe)">Update</button></td>        
+        </tr>
+    </tbody>
+</table>
+
+<h4> *** Favourites Recipes ***</h4>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th></th>
+        </tr>        
+    </thead>   
+
+    <tbody>
+        <tr *ngFor="let favourite of recipesStore.favourites, index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ favourite.title }}</td> 
+            <td><button class="btn btn-dark" (click)="delFav(favourite)">Delete</button></td>           
+        </tr>
+    </tbody>
+
+</table>
+
+<h3>Insert a new recipe</h3>
+
+<app-recipe-form [active] = "recipesStore.active" (resetActive)="resetActive()" (saveRecipe)="saveRecipe($event)"></app-recipe-form>
